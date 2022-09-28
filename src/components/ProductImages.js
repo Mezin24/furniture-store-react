@@ -1,9 +1,28 @@
-import React, { useState } from 'react'
-import styled from 'styled-components'
+import React, { useState } from 'react';
+import styled from 'styled-components';
 
-const ProductImages = () => {
-  return <h4>product images</h4>
-}
+const ProductImages = ({ images = [{ url: '' }] }) => {
+  const [mainImage, setMainImage] = useState(images[0]);
+  console.log(images);
+  return (
+    <Wrapper>
+      <img src={mainImage.url} alt='main' className='main' />
+      <div className='gallery'>
+        {images.map((img, index) => {
+          return (
+            <img
+              src={img.url}
+              alt={img.filename}
+              key={index}
+              onClick={() => setMainImage(images[index])}
+              className={`${img.url === mainImage.url ? 'active' : ''}`}
+            />
+          );
+        })}
+      </div>
+    </Wrapper>
+  );
+};
 
 const Wrapper = styled.section`
   .main {
@@ -48,6 +67,6 @@ const Wrapper = styled.section`
       }
     }
   }
-`
+`;
 
-export default ProductImages
+export default ProductImages;
