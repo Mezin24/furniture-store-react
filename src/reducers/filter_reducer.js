@@ -11,10 +11,16 @@ import {
 
 const filter_reducer = (state, action) => {
   if (action.type === LOAD_PRODUCTS) {
+    const maxPrice = action.payload.reduce(
+      (max, cur) => (cur.price > max ? cur.price : max),
+      0
+    );
+
     return {
       ...state,
       all_products: [...action.payload],
       filtered_products: [...action.payload],
+      filters: { ...state.filters, max_price: maxPrice, price: maxPrice },
     };
   }
 
@@ -28,6 +34,20 @@ const filter_reducer = (state, action) => {
 
   if (action.type === UPDATE_SORT) {
     return { ...state, sort: action.payload };
+  }
+
+  if (action.type === UPDATE_FILTERS) {
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        [action.payload.name]: action.payload.value,
+      },
+    };
+  }
+
+  if (action.type === FILTER_PRODUCTS) {
+    return { ...state };
   }
 
   if (action.type === SORT_PRODUCTS) {
@@ -50,7 +70,7 @@ const filter_reducer = (state, action) => {
       tempProducts = tempProducts.sort((a, b) => b.name.localeCompare(a.name));
     }
 
-    return { ...sort, filtered_products: tempProducts };
+    return { ...state, filtered_products: tempProducts };
   }
 
   return state;
