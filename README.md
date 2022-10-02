@@ -2,4 +2,4 @@
 
 ---
 
-Furniture selling react app. Based on react course from [John Smilga](https://github.com/john-smilga) on [Udemy](https://www.udemy.com/course/react-tutorial-and-projects-course/).
+[Furniture selling react app](https://6339fda60dfefb2ab02a1b7d--idyllic-centaur-d6a8df.netlify.app/). Based on react course from [John Smilga](https://github.com/john-smilga) on [Udemy](https://www.udemy.com/course/react-tutorial-and-projects-course/).
