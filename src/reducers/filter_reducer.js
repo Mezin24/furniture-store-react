@@ -46,8 +46,77 @@ const filter_reducer = (state, action) => {
     };
   }
 
+  if (action.type === CLEAR_FILTERS) {
+    return {
+      ...state,
+      filters: {
+        ...state.filters,
+        text: '',
+        category: 'all',
+        company: 'all',
+        color: 'all',
+        price: state.filters.max_price,
+        min_price: 0,
+        max_price: state.filters.max_price,
+        shipping: false,
+      },
+    };
+  }
+
   if (action.type === FILTER_PRODUCTS) {
-    return { ...state };
+    const {
+      all_products,
+      filters: {
+        text,
+        category,
+        company,
+        color,
+        price,
+        min_price,
+        max_price,
+        shipping,
+      },
+    } = state;
+
+    let temp_products = [...all_products];
+
+    if (text.trim()) {
+      temp_products = temp_products.filter((product) => {
+        return product.name.toLowerCase().startsWith(text);
+      });
+    }
+
+    if (category !== 'all') {
+      temp_products = temp_products.filter((product) => {
+        return product.category === category;
+      });
+    }
+
+    if (company !== 'all') {
+      temp_products = temp_products.filter((product) => {
+        return product.company === company;
+      });
+    }
+
+    if (color !== 'all') {
+      temp_products = temp_products.filter((product) => {
+        return product.colors.some((clr) => clr === color);
+      });
+    }
+
+    if (price < max_price) {
+      temp_products = temp_products.filter((product) => {
+        return product.price <= price;
+      });
+    }
+
+    if (shipping) {
+      temp_products = temp_products.filter((product) => {
+        return product.shipping;
+      });
+    }
+
+    return { ...state, filtered_products: temp_products };
   }
 
   if (action.type === SORT_PRODUCTS) {

@@ -70,11 +70,15 @@ export const FilterProvider = ({ children }) => {
       value = +value;
     }
 
+    if (name === 'shipping') {
+      value = e.target.checked;
+    }
+
     dispatch({ type: UPDATE_FILTERS, payload: { name, value } });
   };
 
   const clearFilters = () => {
-    console.log('clear');
+    dispatch({ type: CLEAR_FILTERS });
   };
 
   return (

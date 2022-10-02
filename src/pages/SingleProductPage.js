@@ -23,6 +23,7 @@ const SingleProductPage = () => {
   } = useProductsContext();
 
   const { id } = useParams();
+  console.log(id);
   const history = useHistory();
 
   useEffect(() => {

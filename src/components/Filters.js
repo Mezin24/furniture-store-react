@@ -79,6 +79,7 @@ const Filters = () => {
                 if (clr === 'all') {
                   return (
                     <button
+                      key={i}
                       onClick={updateFilters}
                       name='color'
                       data-color='all'
@@ -92,6 +93,7 @@ const Filters = () => {
                 }
                 return (
                   <button
+                    key={i}
                     name='color'
                     data-color={clr}
                     onClick={updateFilters}
@@ -120,7 +122,20 @@ const Filters = () => {
               value={price}
             />
           </div>
+          <div className='form-control shipping'>
+            <label htmlFor='shipping'>free shipping</label>
+            <input
+              type='checkbox'
+              name='shipping'
+              id='shipping'
+              checked={shipping}
+              onChange={updateFilters}
+            />
+          </div>
         </form>
+        <button className='clear-btn' type='button' onClick={clearFilters}>
+          Clear filters
+        </button>
       </div>
     </Wrapper>
   );

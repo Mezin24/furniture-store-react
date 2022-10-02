@@ -7,9 +7,11 @@ const ProductList = () => {
   const { filtered_products: products, grid_view } = useFilterContext();
 
   if (products.length < 1) {
-    <h5 style={{ textTransform: 'none' }}>
-      Sorry, no products match your sotrs
-    </h5>;
+    return (
+      <h5 style={{ textTransform: 'none' }}>
+        Sorry, no products match your sotrs
+      </h5>
+    );
   }
 
   if (grid_view === false) {
