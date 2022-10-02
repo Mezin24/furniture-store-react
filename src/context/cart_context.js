@@ -35,11 +35,34 @@ export const CartProvider = ({ children }) => {
     dispatch({ type: ADD_TO_CART, payload: { id, color, amount, product } });
   };
 
-  const removeItem = (id) => {};
-  const toggleAmount = (id, amount) => {};
-  const clearCart = () => {};
+  const removeItem = (id) => {
+    dispatch({ type: REMOVE_CART_ITEM, payload: id });
+  };
+  const toggleAmount = (id, value) => {
+    dispatch({ type: TOGGLE_CART_ITEM_AMOUNT, payload: { id, value } });
+  };
+  const clearCart = () => {
+    dispatch({ type: CLEAR_CART });
+  };
 
   useEffect(() => {
+    const { total_item, total_amount } = cart.reduce(
+      (total, cur) => {
+        const { amount, price } = cur;
+        total.total_item += amount;
+        total.total_amount += amount * price;
+
+        return total;
+      },
+      {
+        total_item: 0,
+        total_amount: 0,
+      }
+    );
+    dispatch({
+      type: COUNT_CART_TOTALS,
+      payload: { total_item, total_amount },
+    });
     localStorage.setItem('cart', JSON.stringify(cart));
   }, [cart]);
 
